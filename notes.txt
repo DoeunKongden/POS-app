@@ -1,0 +1,40 @@
+6-14-2022{
+    from CustomerForm we this.$emit the form value to a custum event we created called close in customer.value
+    when we are in the customer.vue file we can see , we have already create the custum event call "close" which is in the customerForm import @close="close"
+
+    which then we create a method for that event which take the form parameter as "doc"  and in that close method we check the condition of wether or not it has doc._id or not if it has doc_id which mean that the information has already been added and it need to be updated 
+
+    and if the doc we pass in the parameter doesn't have the doc_id it mean that the form is new and we need to push it in to the customer array with a build in funtion called "push". 
+
+
+    ==> next we gonn handle the edit and delete functionm of the customer.vue file
+}
+
+6-15-2022{
+    Today We manage to make a handleDelete function for the customer Tabel component 
+
+    how it work : 
+        - in the customer Table we have customer.id and we emit that value to a custom event call delete in the customer.vue file
+        - in the customer.vue file we take the Id which was emitted from customerTable  and let that stored inside a parameter call (id) which we declare when creating the handleDelete method for the custom event called delete
+        -after that we let index = each index of id and if the id in the index is equal to the doc._id it will be splice(deleted) from the array index
+
+    Around this hour 10:06 pm  we implement HandleEdit and update our customers information:
+        =>How it work is :
+            1-We wanna send the value of the index we want to edit when the user click on the user 
+            2-then we bind that customers data to our CustomerForm.vue file which is called updateDoc
+            3-The customerForm.vue file recieved that updateDoc in which it recieved it as props type:object , default:null;
+            4-Then after that we set the this.form = updateDoc 
+
+            --> those 4 step above mean that when the user click on the data that they want to update it will show the information in which they clicked on 
+
+            ==> now here come the editing part :  we want to update the customer information by index , in order to do that we need to work with two file which is the customerTable.vue file and the Customer.vue file 
+
+            1-- So first in the customerTable file we have handleEdit which take in the item as a parameter and then it emit that item to a custom event call update which is in the custoemr.vue file
+            2-- so in the Customer.vue file we have the custom event called update which has a method called handleEdit
+            3-- and HandleEdit take in the item data as doc as a parameter in which it will set that that updateDoc = Object.asssing({}, doc ) this basically mean that when ever we enter a new data we and close the inception or the dialog the value will not show , we only want them to show when the use click the update button
+
+            4--So in the customer.vue file we have a custome event call Close event which contain the close method (funtion)
+
+            5-- and in the close function it has a parameter call doc which take in the form data from the customerForm and then it check weather or not the they have the updated Id or not (update id is the _id) and if they have the updated id it will find each index and let those index equal to the index and in that index it will find each index of the form array and return it as a obj which then it will let the obj._id = doc._id and then we stored all the updated information in the doc array and after we stored them we set inception = false which mean the dialog will clsoe when we click update 
+            6-- and if there is no updated id  (_id) we will just simply push the custoemr data into the doc parameter which the form array from the CustomerForm.vue and we also set the inception = false;
+            }
