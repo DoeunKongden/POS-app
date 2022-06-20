@@ -1,8 +1,8 @@
 <template>
     <div class="q-pa-md">
-        <q-btn label="Add Customer"
-            rounded
+        <q-btn label="Add Category"
             icon="add"
+            rounded
             color="primary"
             @click="inception = true" />
         <q-dialog v-model="inception"
@@ -23,32 +23,32 @@
                         id="add-user">Add Customer</div>
                 </q-card-section>
                 <q-card-section>
-                    <CustomerForm @close="close"
+                    <CategoryForm @close="close"
                         :updateDoc="updateDoc" />
                 </q-card-section>
             </q-card>
         </q-dialog>
-        <CustomerTable :items="customers"
+        <CategoryTable :items="categories"
             @delete="handleDelete"
             @update="handleEdit" />
     </div>
 </template>
 
 <script>
-import CustomerForm from "../components/CustomerForm.vue";
-import CustomerTable from "../components/CustomerTable.vue";
 import moment from "moment"
+import CategoryTable from "../components/CategoryTable.vue"
+import CategoryForm from "../components/CategoryForm.vue"
 
 export default {
     components: {
-        CustomerForm,
-        CustomerTable,
-    },
+    CategoryTable,
+    CategoryForm
+},
 
     data() {
         return {
             inception: false,
-            customers: [],
+            categories: [],
             updateDoc: null,
         };
     },
@@ -62,67 +62,54 @@ export default {
         close(doc) {
             if (doc._id) {
                 //code update
-                let index = this.customers.findIndex((obj) => {
+                let index = this.categories.findIndex((obj) => {
                     return obj._id == doc._id;
                 });
-                this.customers[index].name = doc.name;
-                this.customers[index].gender = doc.gender;
-                this.customers[index].dob = doc.dob;
-                this.customers[index].phone = doc.phone;
-                this.customers[index].status = doc.status;
-                this.customers[index].address = doc.address;
-
+                this.categories[index].name = doc.name;
+                this.categories[index].date = doc.date;
+                this.categories[index].description = doc.description;
                 this.inception = false;
             } else {
                 //code insert
-                this.customers.push(doc);
+                this.categories.push(doc);
                 this.inception = false;
             }
         },
 
         handleDelete(id) {
             console.log(id);
-            let index = this.customers.findIndex((doc) => {
+            let index = this.categories.findIndex((doc) => {
                 return doc._id == id;
             });
-            this.customers.splice(index, 1);
+            this.categories.splice(index, 1);
         },
 
         handleEdit(doc) {
             console.log(doc)
             this.inception = true;
             this.updateDoc = Object.assign({}, doc)
-            this.updateDoc.dob = moment(doc.dob).format('YYYY-MM-DD');
+            this.updateDoc.date = moment(doc.date).format('YYYY-MM-DD');
         },
 
         GetData() {
-            this.customers = [
+            this.categories = [
                 {
                     _id: '1',
-                    name: 'Kongden',
-                    gender: 'male',
-                    dob: new Date(),
-                    phone: '016760505',
-                    status: 'active',
-                    address: 'Phnom Penh'
+                    name: 'Drink',
+                    date: new Date(),
+                    description: "soft drink "
                 },
                 {
                     _id: '2',
-                    name: 'RonalDo',
-                    gender: 'male',
-                    dob: new Date(),
-                    phone: '016760505',
-                    status: 'active',
-                    address: 'Phnom Penh'
+                    name: 'Fried',
+                    date: new Date(),
+                    description: "Fast Food"
                 },
                 {
                     _id: "3",
                     name:"Messi",
-                    gender:"male",
-                    dob: new Date(),
-                    phone: "015467680",
-                    status: "active",
-                    address: "Sihanouk Viller",
+                    date: new Date(),
+                    description: "Messi drink and eat"
                 }
             ]
         }

@@ -8,3 +8,4 @@ import Quasar from 'quasar';
 Vue.use(Quasar);
 import "../../public/material-icons.css"
 import "quasar/dist/quasar.min.css"
+import { BootstrapVueIcons } from 'bootstrap-vue';

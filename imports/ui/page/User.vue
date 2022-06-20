@@ -2,6 +2,8 @@
   <div>
     <div class="q-pa-md q-gutter-sm">
       <q-btn label="Add User"
+        rounded
+        icon="add"
         color="primary"
         @click="inception = true" />
 

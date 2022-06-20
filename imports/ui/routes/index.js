@@ -30,6 +30,11 @@ const routes = [
         component: () => import('../page/Customer.vue'),
         name:"Customer"
     },
+    {
+        path: "/Category",
+        component: () => import('../page/Category.vue'),
+        name:"Category"
+    },
 ]
 
 const router = new VueRouter({
