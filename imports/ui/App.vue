@@ -60,11 +60,11 @@
         <!--Customer-->
         <q-item clickable
           v-ripple
-          to="/Check">
+          to="/Item">
           <q-item-section avatar>
-            <q-icon name="credit_card" />
+            <q-icon name="category" />
           </q-item-section>
-          <q-item-section>Checks</q-item-section>
+          <q-item-section>Item</q-item-section>
         </q-item>
 
         <!---Category-->

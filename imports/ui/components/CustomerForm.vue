@@ -95,10 +95,15 @@ export default {
     },
 
     methods: {
-        handleSubmit() {
+        handleSubmit(e) {
+            //Validation
+            
+
+
+            //submitting data
             this.form.dob = moment(this.form.dob, 'YYYY-MM-DD').toDate;
             console.log('form:', this.form);
-
+            e.preventDefault();
             this.$emit("close", this.form)
         }
     }

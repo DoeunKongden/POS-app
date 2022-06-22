@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueMeteorTracker from 'vue-meteor-tracker'
+import Vuelidate from 'vuelidate'
 
-
+Vue.use(Vuelidate)
 Vue.use(VueMeteorTracker)
 
 import Quasar from 'quasar';
