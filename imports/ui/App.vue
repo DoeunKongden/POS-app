@@ -77,6 +77,17 @@
           <q-item-section>Category</q-item-section>
         </q-item>
 
+        <!--Supplier Page-->
+        <q-item clickable
+          v-ripple
+          to="/Supplier">
+          <q-item-section avatar>
+            <q-icon name="warehouse" />
+          </q-item-section>
+          <q-item-section>Supplier</q-item-section>
+        </q-item>
+
+
       </q-drawer>
 
       <q-page-container>

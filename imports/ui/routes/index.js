@@ -9,12 +9,6 @@ const routes = [
         component: () => import('../page/Home.vue'),
         name:"Home",
     },
-
-    {
-        path: "/Home",
-        component: () => import('../page/Home.vue'),
-        name:'Home'
-    },
     {
         path: "/User",
         component: () => import('../page/User.vue'),
@@ -35,6 +29,11 @@ const routes = [
         component: () => import('../page/Category.vue'),
         name:"Category"
     },
+    {
+        path: "/Supplier",
+        component: () => import('../page/Supplier.vue'),
+        name: "Supplier"
+    }
 ]
 
 const router = new VueRouter({
