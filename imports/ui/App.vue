@@ -31,7 +31,7 @@
         <!--first menu item-->
         <q-item clickable
           v-ripple
-          to="/Home">
+          to="/">
           <q-item-section avatar>
             <q-icon name="home" />
           </q-item-section>
@@ -40,7 +40,7 @@
         <!--User-->
         <q-item clickable
           v-ripple
-          to="/User">
+          to="/user">
           <q-item-section avatar>
             <q-icon name="person" />
           </q-item-section>
@@ -50,7 +50,7 @@
         <!--Customer-->
         <q-item clickable
           v-ripple
-          to="/Customer">
+          to="/customer">
           <q-item-section avatar>
             <q-icon name="people" />
           </q-item-section>
@@ -60,7 +60,7 @@
         <!--Customer-->
         <q-item clickable
           v-ripple
-          to="/Item">
+          to="/item">
           <q-item-section avatar>
             <q-icon name="category" />
           </q-item-section>
@@ -70,7 +70,7 @@
         <!---Category-->
         <q-item clickable
           v-ripple
-          to="/Category">
+          to="/category">
           <q-item-section avatar>
             <q-icon name="backup_table" />
           </q-item-section>
@@ -80,21 +80,60 @@
         <!--Supplier Page-->
         <q-item clickable
           v-ripple
-          to="/Supplier">
+          to="/supplier">
           <q-item-section avatar>
             <q-icon name="warehouse" />
           </q-item-section>
           <q-item-section>Supplier</q-item-section>
         </q-item>
 
+        <!--Purchase Page-->
+        <q-item clickable
+          v-ripple
+          to="/purchase">
+          <q-item-section avatar>
+            <q-icon name="receipt" />
+          </q-item-section>
+          <q-item-section>Purchase</q-item-section>
+        </q-item>
 
+        <!--Sale Pge-->
+        <q-item clickable
+          v-ripple
+          to="/sale">
+          <q-item-section avatar>
+            <q-icon name="chrome_reader_mode" />
+          </q-item-section>
+          <q-item-section>Sale</q-item-section>
+        </q-item>
+
+        <q-list bordered>
+          <q-expansion-item icon="report"
+            label="Report">
+            <q-item clickable
+              v-ripple
+              to="/import">
+              <q-item-section avatar>
+                <q-icon name="arrow_circle_down" />
+              </q-item-section>
+              <q-item-label>Import</q-item-label>
+            </q-item>
+            <q-item clickable
+              v-ripple
+              to="/export">
+              <q-item-section avatar>
+                <q-icon name="arrow_circle_up" />
+              </q-item-section>
+              <q-item-label>Export</q-item-label>
+            </q-item>
+          </q-expansion-item>
+        </q-list>
       </q-drawer>
 
       <q-page-container>
         <div class="text-center text-h5 ">{{ $route.name }}</div>
         <router-view />
       </q-page-container>
-
     </q-layout>
   </div>
 </template>

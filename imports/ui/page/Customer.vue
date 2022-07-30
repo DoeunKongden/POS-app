@@ -53,78 +53,40 @@ export default {
         };
     },
 
-    mounted(){
+    mounted() {
         this.GetData();
     },
 
     methods: {
-
-        close(doc) {
-            if (doc._id) {
-                //code update
-                let index = this.customers.findIndex((obj) => {
-                    return obj._id == doc._id;
-                });
-                this.customers[index].name = doc.name;
-                this.customers[index].gender = doc.gender;
-                this.customers[index].dob = doc.dob;
-                this.customers[index].phone = doc.phone;
-                this.customers[index].status = doc.status;
-                this.customers[index].address = doc.address;
-
-                this.inception = false;
-            } else {
-                //code insert
-                this.customers.push(doc);
-                this.inception = false;
-            }
+        close() {
+            this.inception = false;
+            this.GetData();
         },
 
         handleDelete(id) {
-            console.log(id);
-            let index = this.customers.findIndex((doc) => {
-                return doc._id == id;
-            });
-            this.customers.splice(index, 1);
+            Meteor.call('customer.delete',id,(err,result)=>{
+                if(result){
+                    this.GetData()
+                }else{
+                    console.log("couldn't delete")
+                }
+            })
         },
 
         handleEdit(doc) {
-            console.log(doc)
             this.inception = true;
             this.updateDoc = Object.assign({}, doc)
             this.updateDoc.dob = moment(doc.dob).format('YYYY-MM-DD');
         },
 
         GetData() {
-            this.customers = [
-                {
-                    _id: '1',
-                    name: 'Kongden',
-                    gender: 'male',
-                    dob: new Date(),
-                    phone: '016760505',
-                    status: 'active',
-                    address: 'Phnom Penh'
-                },
-                {
-                    _id: '2',
-                    name: 'RonalDo',
-                    gender: 'male',
-                    dob: new Date(),
-                    phone: '016760505',
-                    status: 'active',
-                    address: 'Phnom Penh'
-                },
-                {
-                    _id: "3",
-                    name:"Messi",
-                    gender:"male",
-                    dob: new Date(),
-                    phone: "015467680",
-                    status: "active",
-                    address: "Sihanouk Viller",
+            Meteor.call('customer.find', (err, result) => {
+                if (result) {
+                    this.customers = result
+                } else {
+                    console.log(err)
                 }
-            ]
+            })
         }
     }
 }

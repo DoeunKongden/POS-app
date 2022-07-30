@@ -7,7 +7,7 @@
             @click="inception = true" />
 
         <q-dialog v-model="inception">
-            <q-card>
+            <q-card class="my-card">
                 <q-bar class="flex justify-end">
                     <q-btn rounded
                         icon="close"
@@ -46,7 +46,52 @@ export default {
             inception: false,
             updatedDoc: null,
             suppliers: [
-                {
+
+            ],
+        };
+    },
+
+    mounted(){
+        this.getdata();
+    },
+
+    methods: {
+        handleInput(formSupplier) {
+            if (formSupplier.id) {
+                let index = this.suppliers.findIndex((obj)=>{
+                    return obj.id == formSupplier.id;
+                })
+                this.suppliers[index].companyName = formSupplier.companyName;
+                this.suppliers[index].ownerName = formSupplier.ownerName;
+                this.suppliers[index].phone = formSupplier.phone;
+                this.suppliers[index].address = formSupplier.address;
+                this.suppliers[index].status = formSupplier.status;
+
+
+                this.updatedDoc = null,
+                this.inception = false;
+            } else {
+                this.suppliers.push(formSupplier);
+                console.log(formSupplier)
+                this.inception = false;
+            }
+        },
+
+        handleDelete(id) {
+            let index = this.suppliers.findIndex((doc) => {
+                return doc.id == id;
+            });
+            this.suppliers.splice(index, 1)
+        },
+
+        handleUpdate(data) {
+            this.inception = true;
+            this.updatedDoc = Object.assign({}, data)
+        },
+
+        getdata(){
+            this.suppliers = [
+                                {
                     id: "1",
                     companyName: "Somnab",
                     ownerName: "Somnab CEO",
@@ -70,40 +115,7 @@ export default {
                     address: "phnom penh",
                     status: "active"
                 },
-            ],
-        };
-    },
-
-    methods: {
-        handleInput(formSupplier) {
-            if (formSupplier.id) {
-                let index = this.suppliers.findIndex((obj)=>{
-                    return obj._id == formSupplier.id;
-                })
-                this.suppliers[index].companyName = formSupplier.companyName;
-                this.suppliers[index].ownerName = formSupplier.ownerName;
-                this.suppliers[index].phone = formSupplier.phone;
-                this.suppliers[index].address = formSupplier.address;
-                this.suppliers[index].status = formSupplier.status;
-
-                this.inception = false;
-            } else {
-                this.suppliers.push(formSupplier);
-                console.log(formSupplier)
-                this.inception = false;
-            }
-        },
-
-        handleDelete(id) {
-            let index = this.suppliers.findIndex((doc) => {
-                return doc._id == id;
-            });
-            this.suppliers.splice(index, 1)
-        },
-
-        handleUpdate(data) {
-            this.inception = true;
-            this.updatedDoc = Object.assign({}, data)
+            ]
         }
     }
 
@@ -111,4 +123,7 @@ export default {
 </script>
 
 <style>
+.my-card{
+    width: 100%;
+}
 </style>

@@ -19,8 +19,8 @@
                     </q-btn>
                 </q-bar>
                 <q-card-section>
-                    <div class="text-h6 primary flex"
-                        id="add-user">Add Customer</div>
+                    <div class="text-h6 primary flex flex-center"
+                        id="add-user">Add Category</div>
                 </q-card-section>
                 <q-card-section>
                     <CategoryForm @close="close"
@@ -41,9 +41,9 @@ import CategoryForm from "../components/CategoryForm.vue"
 
 export default {
     components: {
-    CategoryTable,
-    CategoryForm
-},
+        CategoryTable,
+        CategoryForm
+    },
 
     data() {
         return {
@@ -53,35 +53,26 @@ export default {
         };
     },
 
-    mounted(){
+    mounted() {
         this.GetData();
     },
 
     methods: {
 
         close(doc) {
-            if (doc._id) {
-                //code update
-                let index = this.categories.findIndex((obj) => {
-                    return obj._id == doc._id;
-                });
-                this.categories[index].name = doc.name;
-                this.categories[index].date = doc.date;
-                this.categories[index].description = doc.description;
-                this.inception = false;
-            } else {
-                //code insert
-                this.categories.push(doc);
-                this.inception = false;
-            }
+            //code insert
+            this.inception = false;
+            this.GetData();
         },
 
         handleDelete(id) {
-            console.log(id);
-            let index = this.categories.findIndex((doc) => {
-                return doc._id == id;
-            });
-            this.categories.splice(index, 1);
+            Meteor.call('category.delete',id,(err,result) =>{
+                if(result){
+                    this.GetData()
+                }else{
+                    console.log("couldnt delete data")
+                }
+            })
         },
 
         handleEdit(doc) {
@@ -92,26 +83,13 @@ export default {
         },
 
         GetData() {
-            this.categories = [
-                {
-                    _id: '1',
-                    name: 'Drink',
-                    date: new Date(),
-                    description: "soft drink "
-                },
-                {
-                    _id: '2',
-                    name: 'Fried',
-                    date: new Date(),
-                    description: "Fast Food"
-                },
-                {
-                    _id: "3",
-                    name:"Messi",
-                    date: new Date(),
-                    description: "Messi drink and eat"
+            Meteor.call('category.find',(err,result)=> {
+                if(result){
+                    this.categories = result
+                }else{
+                    console.log('couldnt find data')
                 }
-            ]
+            })
         }
     }
 }

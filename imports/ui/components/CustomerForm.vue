@@ -97,14 +97,27 @@ export default {
     methods: {
         handleSubmit(e) {
             //Validation
-            
-
 
             //submitting data
             this.form.dob = moment(this.form.dob, 'YYYY-MM-DD').toDate;
-            console.log('form:', this.form);
-            e.preventDefault();
-            this.$emit("close", this.form)
+
+            if (this.updateDoc) {
+                Meteor.call('customer.update', this.form,(err,result) => {
+                    if(result){
+                        this.$emit("close")
+                    }else{
+                        console.log("err");
+                    }
+                })
+            } else {
+                Meteor.call('customer.insert', this.form, (err, result) => {
+                    if (result) {
+                        this.$emit("close")
+                    }else{
+                        console.log("err")
+                    }
+                })
+            }
         }
     }
 }

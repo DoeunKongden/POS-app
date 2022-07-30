@@ -1,6 +1,6 @@
 <template>
   <q-markup-table class="q-ma-lg">
-    <thead>
+    <thead class="bg-primary text-white">
       <tr>
         <th class="text-left">No</th>
         <th class="text-left">Name</th>
@@ -16,7 +16,7 @@
         <td class="text-left">{{item.date | toDate}}</td>
         <td class="text-left">{{item.description}}</td>
         <td class="q-px-md">
-          <q-btn  icon="delete" color="red" dense @click="handleDelete(item.id)"></q-btn>
+          <q-btn  icon="delete" color="red" dense @click="handleDelete(item._id)"></q-btn>
           <q-btn  icon="edit" color="info" dense @click="handleUpdate(item)"></q-btn>
         </td>
       </tr>

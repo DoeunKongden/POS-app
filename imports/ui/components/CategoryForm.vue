@@ -19,7 +19,7 @@
                             v-model="categories.description"
                             label="Description" />
                     </div>
-                    
+
                     <div class="col-xs-12 col-sm-4 q-ma-sm">
                         <q-btn color="primary"
                             :label="updateDoc ? `Update` : `Submit`"
@@ -60,13 +60,26 @@ export default {
     },
 
     methods: {
-        handleSubmit(e) {
-            //Validation
-            //submitting data
-            this.categories.dob = moment(this.categories.dob, 'YYYY-MM-DD').toDate;
-            console.log('categories:', this.categories);
-            e.preventDefault();
-            this.$emit("close", this.categories)
+        handleSubmit() {
+            this.categories.date = moment(this.categories.date, 'YYYY-MM-DD').toDate;
+            if (this.updateDoc) {
+                Meteor.call('category.update',this.categories,(err,result)=>{
+                    if(result){
+                        this.$emit("close");
+                    }else{
+                        console.log('err')
+                    }
+                })
+            } else {
+                Meteor.call('category.insert', this.categories, (err, result) => {
+                    if (result) {
+                        console.log('categories:');
+                        this.$emit("close")
+                    } else {
+                        console.log("Couldn't insert");
+                    }
+                })
+            }
         }
     }
 }
