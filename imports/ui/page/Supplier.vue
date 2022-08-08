@@ -51,37 +51,25 @@ export default {
         };
     },
 
-    mounted(){
+    mounted() {
         this.getdata();
     },
 
     methods: {
         handleInput(formSupplier) {
-            if (formSupplier.id) {
-                let index = this.suppliers.findIndex((obj)=>{
-                    return obj.id == formSupplier.id;
-                })
-                this.suppliers[index].companyName = formSupplier.companyName;
-                this.suppliers[index].ownerName = formSupplier.ownerName;
-                this.suppliers[index].phone = formSupplier.phone;
-                this.suppliers[index].address = formSupplier.address;
-                this.suppliers[index].status = formSupplier.status;
-
-
-                this.updatedDoc = null,
-                this.inception = false;
-            } else {
-                this.suppliers.push(formSupplier);
-                console.log(formSupplier)
-                this.inception = false;
-            }
+            console.log(formSupplier)
+            this.inception = false;
+            this.getdata()
         },
 
         handleDelete(id) {
-            let index = this.suppliers.findIndex((doc) => {
-                return doc.id == id;
-            });
-            this.suppliers.splice(index, 1)
+            Meteor.call('supplier.delete',id,(err,result)=>{
+                if(result){
+                    this.getdata()
+                }else{
+                    console.log(err)
+                }
+            })
         },
 
         handleUpdate(data) {
@@ -89,33 +77,12 @@ export default {
             this.updatedDoc = Object.assign({}, data)
         },
 
-        getdata(){
-            this.suppliers = [
-                                {
-                    id: "1",
-                    companyName: "Somnab",
-                    ownerName: "Somnab CEO",
-                    phone: "016760505",
-                    address: "phnom penh",
-                    status: "active"
-                },
-                {
-                    id: "2",
-                    companyName: "FWD",
-                    ownerName: "FWD CEO",
-                    phone: "016760505",
-                    address: "phnom penh",
-                    status: "active"
-                },
-                {
-                    id: "3",
-                    companyName: "SprintSea",
-                    ownerName: "SprinSea CEO",
-                    phone: "016760505",
-                    address: "phnom penh",
-                    status: "active"
-                },
-            ]
+        getdata() {
+           Meteor.call('supplier.find',(err,result)=>{
+            if(result){
+                this.suppliers = result;
+            }
+           })
         }
     }
 
@@ -123,7 +90,7 @@ export default {
 </script>
 
 <style>
-.my-card{
+.my-card {
     width: 100%;
 }
 </style>

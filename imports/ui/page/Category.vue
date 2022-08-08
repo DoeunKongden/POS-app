@@ -4,7 +4,7 @@
             icon="add"
             rounded
             color="primary"
-            @click="inception = true" />
+            @click="handleAdd" />
         <q-dialog v-model="inception"
             class="dialog1">
             <q-card class="form">
@@ -59,6 +59,11 @@ export default {
 
     methods: {
 
+        handleAdd() {
+            this.inception = true,
+            this.updateDoc = null
+        },
+
         close(doc) {
             //code insert
             this.inception = false;
@@ -66,10 +71,10 @@ export default {
         },
 
         handleDelete(id) {
-            Meteor.call('category.delete',id,(err,result) =>{
-                if(result){
+            Meteor.call('category.delete', id, (err, result) => {
+                if (result) {
                     this.GetData()
-                }else{
+                } else {
                     console.log("couldnt delete data")
                 }
             })
@@ -83,10 +88,10 @@ export default {
         },
 
         GetData() {
-            Meteor.call('category.find',(err,result)=> {
-                if(result){
+            Meteor.call('category.find', (err, result) => {
+                if (result) {
                     this.categories = result
-                }else{
+                } else {
                     console.log('couldnt find data')
                 }
             })

@@ -11,12 +11,12 @@
 
                     <div class="col-xs-12 col-sm-4 q-ma-sm">
                         <q-select outlined
-                            v-model="items.categoryId"
+                            v-model="items.category"
                             label="Category"
                             :options="categoryOpt"
                             map-options
                             emit-value
-                            option-value="_id"
+                            option-value="name"
                             option-label="name" />
                     </div>
 
@@ -69,15 +69,14 @@ export default {
                 date: moment(new Date("YYYY-MM-DD")),
                 description: null,
                 categoryId: null,
-                category:null,
+                category: null,
             },
-
             categoryOpt: [
 
             ]
         }
     },
-    
+
     props: {
         updateDoc: {
             type: Object,
@@ -100,35 +99,34 @@ export default {
             //Validation
             //submitting data
             this.items.date = moment(this.items.date, 'YYYY-MM-DD').toDate;
-            console.log('items:', this.items);
-            this.$emit("close", this.items);
-            let index = this.categoryOpt.findIndex((doc) => {
-                return this.items.categoryId == doc._id
-            })
-            this.items.category = this.categoryOpt[index].name
+            if (this.updateDoc) {
+                Meteor.call('item.update',this.items,(err,result)=>{
+                    if(result){
+                        this.$emit("close")
+                    }else{
+                        console.log("Error")
+                    }
+                })
+            } else {
+                Meteor.call('item.insert', this.items, (err, result) => {
+                    if (result) {
+                        console.log('items:', this.items);
+                        this.$emit("close", this.items);
+                    } else {
+                        console.log("could not insert data")
+                    }
+                })
+            }
         },
 
         getCategory() {
-            this.categoryOpt = [
-                {
-                    _id: "01",
-                    name: "soft-drink",
-                    date: new Date(),
-                    description: 'Soft-Drink ',
-                },
-                {
-                    _id: "02",
-                    name: "hard-drink",
-                    date: new Date(),
-                    description: 'hard-Drink ',
-                },
-                {
-                    _id: "03",
-                    name: "Football player",
-                    date: new Date(),
-                    description: 'sth sth',
-                },
-            ]
+            Meteor.call('category.find', (err, result) => {
+                if (result) {
+                    this.categoryOpt = result;
+                } else {
+                    console.log("Could not find category data")
+                }
+            })
         }
     }
 }

@@ -11,7 +11,7 @@
                             map-options
                             emit-value
                             option-value="_id"
-                            option-label="company" />
+                            option-label="companyName" />
                     </div>
                     <div class="col-xs-12 col-sm-4 q-ma-sm">
                         <q-select outlined
@@ -102,69 +102,44 @@ export default {
                 company: null,
             },
 
-            SuppliersOpt: [],
-            ItemOpt: [],
+            SuppliersOpt: [
+    
+            ],
+            ItemOpt: [
+
+            ],
         }
     },
     methods: {
         handleSubmit() {
             this.Purchase.date = moment(this.Purchase.date, "YYYY-MM-DD").toDate();
-            let indexSupplier = this.SuppliersOpt.findIndex((doc) => {
-                return this.Purchase.suppliersId == doc._id;
-            });
-            let indexItem = this.ItemOpt.findIndex((doc) => {
-                return this.Purchase.itemId == doc._id;
-            });
-
-            this.Purchase.name = this.ItemOpt[indexItem].name,
-            this.Purchase.company = this.SuppliersOpt[indexSupplier].company,
-
-                console.log("form:", this.Purchase)
-            this.$emit("submit", this.Purchase)
+            Meteor.call('purchase.add', this.Purchase, (err, result) => {
+                if (result) {
+                    console.log("form:", this.Purchase)
+                    this.$emit("submit", this.Purchase)
+                }
+            })
         },
 
         getSuppliersOpt() {
-            this.SuppliersOpt = [
-                {
-                    _id: "01",
-                    company: "Coca-Company",
-                    ownername: "Doeun Kongden",
-                    phone: "016760505",
-                    address: "KPS",
-                    status: "active",
-                },
-                {
-                    _id: "02",
-                    company: "Pepsi-Company",
-                    ownername: "Elon Musk",
-                    phone: "8785098312",
-                    address: "USA",
-                    status: "active",
+              Meteor.call('supplier.find',(err,result)=>{
+                if(result){
+                    console.log(result)
+                    this.SuppliersOpt = result
+                }else{
+                    console.log(err)
                 }
-            ]
+              })
         },
 
         getItemOpt() {
-            this.ItemOpt = [
-                {
-                    _id: "01",
-                    name: "Coca",
-                    categoryName: "Drink",
-                    categoryId: "01",
-                    date: new Date(),
-                    description: "coca soft drink emm emm",
-                    status: "active",
-                },
-                {
-                    _id: "02",
-                    name: "Pepsi",
-                    categoryName: "Drink",
-                    categoryId: "02",
-                    date: new Date(),
-                    description: "Pepsi soft drink emm emm",
-                    status: "inactive",
-                }
-            ]
+                Meteor.call('item.find', (err, result) => {
+                    if (result){
+                        this.ItemOpt = result
+                    }else{
+                        console.log(err)
+                    }
+               })
         }
 
 
@@ -173,4 +148,5 @@ export default {
 </script>
 
 <style>
+
 </style>

@@ -20,47 +20,37 @@
                     </div>
 
                     <div class="col-xs-12 col-sm-4 q-ma-sm">
-                        <q-input 
-                            outlined
+                        <q-input outlined
                             autofocus
                             label="Phone Number"
                             type="text"
-                            v-model="supplier.phone"
-                        />
+                            v-model="supplier.phone" />
                     </div>
 
                     <div class="col-xs-12 col-sm-4 q-ma-sm">
-                        <q-input 
-                            autofocus
+                        <q-input autofocus
                             outlined
                             label="Address"
                             type="text"
-                            v-model="supplier.address"
-                        />
+                            v-model="supplier.address" />
                     </div>
 
                     <div class="col-xs-12 col-sm-4 q-ma-sm">
                         <fieldset>
                             <label for="">Status:</label>
-                            <q-radio 
-                                v-model="supplier.status"
+                            <q-radio v-model="supplier.status"
                                 val="active"
-                                label="Active"
-                            />
-                            <q-radio 
-                                v-model="supplier.status"
+                                label="Active" />
+                            <q-radio v-model="supplier.status"
                                 val="inactive"
-                                label="Inactive"
-                            />
+                                label="Inactive" />
                         </fieldset>
                     </div>
 
                     <div class="col-xs-12 col-sm-4 q-ma-sm">
-                        <q-btn 
-                            color="primary"
-                            :label="updatedDoc? `Update` : `Submit`"
-                            @click="handleSubmit"
-                        ></q-btn>
+                        <q-btn color="primary"
+                            :label="updatedDoc ? `Update` : `Submit`"
+                            @click="handleSubmit"></q-btn>
                     </div>
                 </div>
             </q-card-section>
@@ -70,22 +60,22 @@
 
 <script>
 export default {
-    props:{
-        updatedDoc:{
-            type:Object,
-            default:null,
+    props: {
+        updatedDoc: {
+            type: Object,
+            default: null,
         }
     },
 
-    mounted(){
-        if(this.updatedDoc){
+    mounted() {
+        if (this.updatedDoc) {
             this.supplier = this.updatedDoc
         }
     },
 
-    data(){
-        return{
-            supplier:{
+    data() {
+        return {
+            supplier: {
                 companyName: null,
                 ownerName: null,
                 phone: null,
@@ -95,14 +85,29 @@ export default {
         }
     },
 
-    methods:{
-        handleSubmit(){
-            this.$emit("submit", this.supplier)
+    methods: {
+        handleSubmit() {
+            if (this.updatedDoc) {
+                Meteor.call('supplier.update', this.supplier, (err, result) => {
+                    if (result) {
+                        this.$emit("submit")
+                    } else {
+                        console.log(err)
+                    }
+                })
+            } else {
+                Meteor.call('supplier.insert', this.supplier, (err, result) => {
+                    if (result) {
+                        this.$emit("submit", this.supplier)
+                    } else {
+                        console.log(err.message)
+                    }
+                })
+            }
         }
     }
 }
 </script>
 
 <style>
-
 </style>

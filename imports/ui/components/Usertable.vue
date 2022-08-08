@@ -1,6 +1,6 @@
 <template>
   <q-markup-table class="q-ma-lg">
-    <thead>
+    <thead class="bg-primary text-white">
       <tr>
         <th class="text-left">No</th>
         <th class="text-left">Name</th>

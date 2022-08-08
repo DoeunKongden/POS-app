@@ -1,6 +1,6 @@
 <template>
     <q-markup-table class="q-ma-md">
-        <thead>
+        <thead class="bg-primary text-white">
             <tr>
                 <th class="text-left">No</th>
                 <th class="text-left">Company Name</th>
@@ -20,7 +20,7 @@
                 <td class="text-left">{{data.address}}</td>
                 <td class="text-left">{{data.status}}</td>
                 <td class="text-left">
-                    <q-btn icon="delete" dense color="red" @click="handleDelete(data.id)"></q-btn>
+                    <q-btn icon="delete" dense color="red" @click="handleDelete(data._id)"></q-btn>
 
                     <q-btn icon="edit" dense color="info" @click="handleUpdate(data)"></q-btn>
                 </td>
