@@ -6,7 +6,12 @@
             label="Add Supplier"
             @click="inception = true" />
 
-        <q-dialog v-model="inception">
+        <q-dialog 
+        v-model="inception"
+        :maximized="maximizedToggle=true"
+        transition-show="slide-up"
+        transition-hide="slide-down"
+        >
             <q-card class="my-card">
                 <q-bar class="flex justify-end">
                     <q-btn rounded
@@ -17,7 +22,7 @@
                     </q-btn>
                 </q-bar>
                 <q-card-section>
-                    <div class="text-h6 primary flex">
+                    <div class="text-h6 primary flex justify-center">
                         Add Supplier
                     </div>
                 </q-card-section>

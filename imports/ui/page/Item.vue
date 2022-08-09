@@ -6,7 +6,10 @@
             color="primary"
             @click="handleAdd" />
         <q-dialog v-model="inception"
-            class="dialog1">
+            :maximized="maximizedToggle=true"
+            transition-hide="slide-down"
+            transition-show="slide-up"
+        >
             <q-card class="form">
                 <q-bar class="flex justify-end">
                     <q-btn dense

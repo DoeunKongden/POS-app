@@ -92,7 +92,9 @@
             <div>
                 <q-btn color="primary"
                     label="submit"
-                    type="submit" />
+                    type="submit" 
+                    @click="handleSubmit()"
+                    />
             </div>
         </form>
     </div>
@@ -130,7 +132,7 @@ export default {
         clearForm(){
             this.form={
                 invoiceNumber:null,
-                date:moment(new Date()).format('YYYY-MM-DD'),
+                date:moment(new Date()).format('YYYY-MM-DD').toString(),
                 customerId:null,
                 items:[]
             },
@@ -142,7 +144,7 @@ export default {
             let doc={
                 invoiceNumber: this.form.invoiceNumber,
                 customerId: this.form.customerId,
-                date: moment(this.form.date,"YYYY-MM-DD"),
+                date: moment(this.form.date,"YYYY-MM-DD").toString(),
                 items:[]
             }
 
@@ -154,12 +156,19 @@ export default {
                 })
             })
 
-            console.log(doc)
-            this.clearForm();
+            Meteor.call('invoice.insert',doc,(err,result)=> {
+                if(result){
+                    this.clearForm();
+                }
+            });
         },
 
         getInvoiceNumber() {
-            this.form.invoiceNumber = 1;
+            Meteor.call("invoice.number",(err,result)=>{
+                if(result){
+                    this.form.invoiceNumber = result
+                }
+            })
         },
         handleRemove(index) {
             this.form.items.splice(index, 1)
@@ -190,36 +199,19 @@ export default {
             console.log(this.form);
         },
         getPurchase() {
-            this.itemOpt = [
-                {
-                    _id: '01',
-                    itemId: '01',
-                    name: "Coca Cola",
-                    price: 5500,
-                    qty: 15,
-                },
-                {
-                    _id: '02',
-                    itemId: '02',
-                    name: "Pepsi Cola",
-                    price: 1500,
-                    qty: 25,
-                },
-            ]
+            Meteor.call('purchase.find',(err,result)=>{
+                if(result){
+                    this.itemOpt = result
+                }
+            })
         },
 
         getCustomer() {
-            this.customerOpt = [
-                {
-                    _id: "01",
-                    name: "Doeun Kongden",
-
-                },
-                {
-                    _id: "02",
-                    name: "Jimmy"
+            Meteor.call('customer.find',(err,result)=>{
+                if(result){
+                    this.customerOpt = result
                 }
-            ]
+            })
         }
     }
 }

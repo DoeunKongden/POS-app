@@ -5,9 +5,13 @@
             icon="add"
             @click="handleAdd" />
 
-        <q-dialog v-model="inception">
+        <q-dialog v-model="inception"
+            :maximized="maximizedToggle=true"
+            transition-show="slide-up"
+            transition-hide="slide-down"
+        >
             <q-card class="my-card">
-                <q-bar>
+                <q-bar class="flex justify-end">
                     <q-btn icon="close"
                         v-close-popup
                         class="bg-red text-white">

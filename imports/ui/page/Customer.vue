@@ -6,7 +6,10 @@
             color="primary"
             @click="inception = true" />
         <q-dialog v-model="inception"
-            class="dialog1">
+            :maximized="maximizedToggle=true"
+            transition-show="slide-up"
+            transition-hide="slide-down"
+        >
             <q-card class="form">
                 <q-bar class="flex justify-end">
                     <q-btn dense
@@ -19,7 +22,7 @@
                     </q-btn>
                 </q-bar>
                 <q-card-section>
-                    <div class="text-h6 primary flex"
+                    <div class="text-h6 primary flex justify-center"
                         id="add-user">Add Customer</div>
                 </q-card-section>
                 <q-card-section>

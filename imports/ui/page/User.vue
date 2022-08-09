@@ -1,13 +1,17 @@
 <template>
   <div>
-    <div class="q-pa-md q-gutter-sm">
+    <div class="q-pa-md q-gutter-sm ">
       <q-btn label="Add User"
         rounded
         icon="add"
         color="primary"
         @click="inception = true" />
 
-      <q-dialog v-model="inception">
+      <q-dialog v-model="inception"
+        :maximized="maximizedToggle=true"
+        transition-hide="slide-down"
+        transition-show="slide-up"
+      >
         <q-card>
           <q-bar class="flex justify-end">
             <q-btn dense
@@ -20,7 +24,7 @@
             </q-btn>
           </q-bar>
           <q-card-section>
-            <div class="text-h6 primary flex"
+            <div class="text-h6 primary flex justify-center"
               id="add-user">Add User</div>
           </q-card-section>
 

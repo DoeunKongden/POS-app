@@ -8,7 +8,6 @@
             <th class="text-left">Quatity</th>
             <th class="text-left">Date</th>
             <th class="text-left">Status</th>
-            <th class="text-left">Action</th>
         </thead>
         <tbody>
             <tr v-for="(prop, index) in purchase"
@@ -20,20 +19,6 @@
                 <td class="text-left">{{ prop.quantity }}</td>
                 <td class="text-left">{{ prop.date | toDate}}</td>
                 <td class="text-left">{{ prop.status }}</td>
-                <td class="text-left">
-                    <q-btn icon="delete"
-                        dense
-                        color="red"
-                        rounder 
-                        @click="handleDelte(prop.id)"
-                        />
-
-                    <q-btn icon="edit"
-                        dense
-                        color="primary" 
-                        @click="handleEdit(prop)"
-                        />
-                </td>
             </tr>
         </tbody>
     </q-markup-table>
@@ -54,16 +39,6 @@ export default {
             return moment(date).format("YYYY-MM-DD")
         }
     },
-
-    methods:{
-        handleEdit(data){
-            this.$emit("edit",data);
-        },
-
-        handleDelte(id){
-            this.$emit("delete", id);
-        }
-    }
 }
 </script>
 
